@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    triggers {
+        pollSCM '* * * * *'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh './gradlew assemble'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './gradlew test'
+            }
+        }
+        stage('Build Docker compose ') {
+            steps {
+                sh 'docker-compose build'
+            }
+        }
+        stage('Push Docker image') {
+            environment {
+                DOCKER_HUB_LOGIN = credentials('docker-hub')
+            }
+            steps {
+                sh 'docker push mohkeita/spring-api-sample-jenkins'
+            }
+        }
+    }
+}
