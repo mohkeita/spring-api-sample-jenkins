@@ -4,5 +4,4 @@ Simple Spring Boot API application with integration tests, and then building it 
 - Postgres
 - Jenkins
 - Docker
-- Aws
 
